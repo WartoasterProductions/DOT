@@ -1,0 +1,10 @@
+ESPAsyncTCP
+NTPClient
+Adafruit GFX Library
+ArduinoOTA
+ESP8266WiFi
+Wire
+DNSServer
+Adafruit IS31FL3731 Library
+LittleFS
+ESPAsyncWebServer
