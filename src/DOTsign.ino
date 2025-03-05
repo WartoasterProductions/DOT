@@ -31,50 +31,40 @@ unsigned long previousPageTime = 0, previousDrawTime = 0, lastButtonPressTime = 
 bool changeNow = false, forceUpdate = false;
 int currentPage = 0;
 
-// Weather variables
 OW_Weather ow;
 String api_key, latitude, longitude, units = "imperial", language = "en";
 unsigned long lastWeatherUpdate = 0;
 const unsigned long WEATHER_UPDATE_INTERVAL = 5 * 60 * 1000; // 5 minutes
 
-// WiFi and connection
 bool connectInProgress = false;
 unsigned long connectStartTime = 0;
 String pendingSSID, pendingPass;
 
-// Button pins and debounce settings
 #define BTN_LEFT    14
 #define BTN_RIGHT   2  //retail
 #define BTN_SELECT  12 //retail
-// #define BTN_RIGHT   12 //prototype
-// #define BTN_SELECT  2  //prototype
 #define BTN_UP      13
 #define BTN_DOWN    0
 const unsigned long debounceDelay = 80;
 bool buttonDown = false;
 
-// Remote control flags
 volatile bool remote_UP = false, remote_DOWN = false, remote_LEFT = false, remote_RIGHT = false, remote_SELECT = false;
 
-// Menu
 #define MENU_ITEMS 9
 const char *menuOptions[MENU_ITEMS] = { "EDIT", "DISPLAY", "CLOCK", "WEATHER", "WIFI", "GAME", "SCRNSAVR", "STREAM", "RESET" };
 int menuSelected = 0;
 bool menuOpen = false, ignoreMenu = false;
 
-// Snake game
 #define SNAKE_MAX_LENGTH (DISPLAY_WIDTH * DISPLAY_HEIGHT)
 int snakeLength = 5, snakeDirection = 1;  // 0: Up, 1: Right, 2: Down, 3: Left
 int snakeX[SNAKE_MAX_LENGTH], snakeY[SNAKE_MAX_LENGTH];
 int foodX, foodY;
 bool foodEaten = false, snake = false;
 
-// Loading animation for weather
 String loadingBar[4] = { "|", "/", "-", "\\" };
 unsigned long lastLoadingUpdate = 0;
 int loadingIndex = 0;
 
-// Networking, OTA, and time
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP);
 DNSServer dnsServer;
@@ -86,14 +76,11 @@ const uint16_t UDP_FRAME_PORT = 42069;
 
 
 
-// Matrix driver and addresses
 Adafruit_IS31FL3731 matrices[8];
 uint8_t matrixAddresses[] = { 0x74, 0x75, 0x76, 0x77 };
 
-// File storage for pages (3 lines per page)
 String pageData[MAX_PAGES][3];
 
-// Global time offset (for NTP)
 int timeOffset = 0;
 
 // ----------------------- Utility Functions -----------------------
@@ -270,7 +257,6 @@ void loadTimeSettings() {
   timeClient.update();
 }
 
-// Loading and error screens for weather
 void displayWeatherLoading() {
   clearBuffer();
   drawText(0, 0, "LOADING");
@@ -347,7 +333,6 @@ void checkWeatherUpdate() {
 
 // ----------------------- Edit Page Functions -----------------------
 
-// Temporary buffer for editing page 0 (3x8)
 char page0[3][8];
 static int cursorRow = 0, cursorCol = 0;
 static char currentSelection = 'A';
